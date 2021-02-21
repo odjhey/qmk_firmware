@@ -16,4 +16,6 @@
 
 #pragma once
 
+#define RGBLIGHT_LAYERS
+
 // place overrides here
