@@ -17,13 +17,15 @@
 
 enum idobo_layers {
   _QWERTY,
-  _RAISE
+  _RAISE,
+  _LOWER
 };
 
 // Defines the keycodes used by our macros in process_record_user
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
   RAISE,
+  LOWER,
   QMKBEST,
   QMKURL
 };
@@ -34,7 +36,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB,              KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,             _______, _______, _______,  KC_Y,                KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS, \
     CTL_T(KC_ESC),       KC_A,    KC_S,    KC_D,    KC_F,    KC_G,             _______,   RESET, _______,  KC_H,                KC_J,    KC_K,    KC_L,    KC_SCLN, RCTL_T(KC_QUOT),  \
     KC_LSFT,             KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,             _______, _______, _______,  KC_N,                KC_M,    KC_COMM, KC_DOT,  KC_SLSH, RSFT_T(KC_EQUAL), \
-    KC_LCTL,             _______, _______, KC_LALT, KC_SPC,  LGUI_T(KC_BSPC),  _______, _______, _______,  LT(_RAISE, KC_ENT),  KC_SPC,  KC_RALT, _______, KC_RCTL, RAISE    \
+    KC_LCTL,             _______, _______, KC_LALT, KC_SPC,  LGUI_T(KC_BSPC),  _______, _______, _______,  LT(_RAISE, KC_ENT),  KC_SPC,  KC_RALT,  LOWER,  KC_RCTL, RAISE    \
   ),
   [_RAISE] = LAYOUT_ortho_5x15( \
     KC_F12,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,     _______, _______, _______, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,   \
@@ -43,6 +45,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, _______, KC_LBRC, KC_RBRC, _______,   _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  _______, _______,  \
     _______, _______, _______, _______, _______, _______,   _______, _______, _______, _______, _______, _______, _______, _______, _______   \
   ),
+  [_LOWER] = LAYOUT_ortho_5x15( \
+    _______, _______, _______, _______, _______, _______,   _______, RGB_MOD, _______,   _______, _______, _______, _______, _______, _______,  \
+    _______, _______, _______, _______, _______, _______,   _______, RGB_TOG, _______,   _______, _______, _______, _______, _______, _______,  \
+    _______, _______, _______, _______, _______, _______,   _______,  RESET,  _______,   _______, _______, _______, _______, _______, _______,  \
+    _______, _______, _______, _______, _______, _______,   _______, _______, _______,   _______, _______, _______, _______, _______, _______,  \
+    _______, _______, _______, _______, _______, _______,   _______, _______, _______,   _______, _______, _______, _______, _______, _______   \
+  )
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -58,6 +67,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         layer_on(_RAISE);
       } else {
         layer_off(_RAISE);
+      }
+      return false;
+      break;
+    case LOWER:
+      if (record->event.pressed) {
+        layer_on(_LOWER);
+      } else {
+        layer_off(_LOWER);
       }
       return false;
       break;
