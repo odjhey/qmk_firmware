@@ -37,7 +37,8 @@ enum preonic_keycodes {
   NAV,
   BACKLIT,
   CBZOOM,
-  CBMUX
+  CBMUX,
+  CXMACS
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -121,7 +122,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_LOWER] = LAYOUT_preonic_grid(
-  RGB_TOG, RGB_MOD, _______,  _______, _______,  _______, _______, KC_AMPR, KC_ASTR, KC_LBRC, CBMUX, _______,
+  RGB_TOG, RGB_MOD, _______,  _______, _______,  _______, _______, KC_AMPR, KC_ASTR, KC_LBRC, CXMACS, _______,
   _______, KC_HOME, KC_UP,  KC_END, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_DEL,
   RGB_HUI, KC_LEFT, KC_DOWN,  KC_RIGHT,   KC_F4,   KC_F5,   KC_F6,   KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, KC_PIPE,
   _______, CBZOOM,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_EQUAL, _______, KC_LT, KC_GT,_______, _______,
@@ -253,6 +254,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           }
           return false;
           break;
+        case CXMACS:
+          if (record->event.pressed) {
+              SEND_STRING(SS_LCTL("x"));
+          } else {
+          }
+          return false;
+          break;
         case CBMUX:
           if (record->event.pressed) {
               SEND_STRING(SS_LCTL("b"));
@@ -263,6 +271,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
     return true;
 };
+
 
 bool muse_mode = false;
 uint8_t last_muse_note = 0;
