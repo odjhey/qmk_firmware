@@ -27,12 +27,13 @@ enum custom_keycodes {
   RAISE,
   LOWER,
   QMKBEST,
-  QMKURL
+  QMKURL,
+  CXMACS
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_ortho_5x15( \
-    LT(_LOWER, KC_GRV),  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,             _______, _______, _______,  KC_6,                KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, \
+    LT(_LOWER, KC_GRV),  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,             _______, _______, _______,  KC_6,                KC_7,    KC_8,    KC_9,    KC_0,    LT(_LOWER, KC_MINS), \
     KC_TAB,              KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,             _______, _______, _______,  KC_Y,                KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS, \
     CTL_T(KC_ESC),       KC_A,    KC_S,    KC_D,    KC_F,    KC_G,             _______,   RESET, _______,  KC_H,                KC_J,    KC_K,    KC_L,    KC_SCLN, RCTL_T(KC_QUOT),  \
     KC_LSFT,             KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,             _______, _______, _______,  KC_N,                KC_M,    KC_COMM, KC_DOT,  KC_SLSH, RSFT_T(KC_EQUAL), \
@@ -46,7 +47,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, _______, _______, _______, _______,  _______, _______, _______,  _______, _______, _______, _______, _______, _______   \
   ),
   [_LOWER] = LAYOUT_ortho_5x15( \
-    _______, _______, _______, _______, _______, _______,   _______, RGB_MOD, _______,   _______, _______, _______, _______, _______, _______,  \
+    _______, _______, _______, _______, _______, _______,   _______, RGB_MOD, _______,   _______, _______, _______, _______,  CXMACS, _______,  \
     _______, _______, KC_LEFT, KC_RGHT, _______, _______,   _______, RGB_TOG, _______,   _______, _______, _______, _______, _______, _______,  \
     _______, _______, KC_DOWN,   KC_UP, _______, _______,   KC_PGDN,  RESET,  KC_PGUP,   _______, _______, _______, _______, _______, _______,  \
     _______, _______, _______, _______, _______, _______,   KC_HOME, KC_UP,   KC_END,    _______, _______, _______, _______, _______, _______,  \
@@ -93,6 +94,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       } else {
         // when keycode QMKURL is released
       }
+      break;
+    case CXMACS:
+      if (record->event.pressed) {
+          SEND_STRING(SS_LCTL("x"));
+      } else {
+      }
+      return false;
       break;
   }
   return true;
