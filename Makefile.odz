@@ -1,0 +1,5 @@
+.PHONY: odeefault
+odeefault:
+	qmk compile -kb idobao/id75/v1 -km odeefault
+	qmk -v flash -kb idobao/id75/v1 -km odeefault
+
